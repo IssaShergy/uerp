@@ -1,0 +1,118 @@
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">لوحة التحكم</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <div class="huge">26</div>
+                        <div>العملاء الجدد !</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">عرض التفاصيل </span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-tasks fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <div class="huge">12</div>
+                        <div>  فواتير مشتريات اليوم!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">  عرض التفاصيل</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-shopping-cart fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <div class="huge">124</div>
+                        <div>الفواتير الجديدة</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">عرض التفاصيل</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-support fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <div class="huge">100,000</div>
+                        <div>رصيد الصندوق</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left"> عرض التفاصيل </span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+ 
+</div> -->
+<!-- /.row -->
+
+         
+            
+    <!-- Morris Charts JavaScript -->
+    
+  
+    <script src="{% static 'admin_app/data/morris-data.js' %}"></script>
+
+
+     <!-- Morris Charts CSS -->
+     <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
+     <!-- Morris Charts JavaScript -->
+     <script src="{% static 'js/raphael/raphael.min.js' %}"></script>
+     <script src="{% static 'js/morris/morris.min.js' %}"></script>
+{% endblock %}

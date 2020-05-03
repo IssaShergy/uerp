@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+ 
+<meta charset="utf8" />
+<link href="{% static 'css/font-awesome/font-awesome.min.css' %}" rel="stylesheet" type="text/css"> 
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	 
+	      	<div class="result"></div>
+			  <style>
+				body{
+				   background-size: cover;  
+				   /* background: url('{% static "recognition/img/bg_image.png"%}') no-repeat center center fixed; */
+				
+				}
+			   
+				.alert {
+ 
+                    text-align: right;
+}
+ 
+body {
+					margin: 0;
+					font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+					font-size: 1rem;
+					font-weight: 400;
+					line-height: 1.5;
+					color: #212529;
+					text-align: right;
+					background-color: #fff;
+}	
+
+			   </style>
+			
+			</head>
+			<body dir="rtl" style="text-align: right; " >
+				
+				 
+				<div class="col-sm-12">
+					<div class="navbar-header " dir="rtl">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href=""> <p  >نظام الحضور  </p> </a>
+						<a class="navbar-brand" href=""> <span  class="hello-msg"   > مرحباً , {{ request.user}} </span> </a>
+					</div>
+					<hr> 
+				</div>
+				 <style>
+				  h4{
+					margin-bottom: 1em;
+					padding-top: 2px;
+			
+				  }
+				  img{
+					border-radius:50%;
+					-webkit-transition: all 0.3s ease-in-out;
+					-moz-transition: all 0.3s ease-in-out;
+					transition: all 0.3s ease-in-out;
+				  }
+				  img:hover{
+					-webkit-box-shadow: 2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+					-moz-box-shadow:    2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+					box-shadow:         2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+					border:2px solid #fff;
+				  }
+				  h3{
+					margin-bottom: 1.3em;
+				  }
+				  a{
+					color:inherit
+				  }
+				  a:hover{
+					color:inherit;
+					text-decoration: none;
+				  }
+				  
+				 
+				</style>
+				
+
+
+
+				  <div class="row">    
+						  <div class="col-md-4 text-center" style="padding-left:auto">
+							<a ><img    id ="siginin"   src="{% static 'images/enter.png' %}" class="img-responsive" style="width:auto;height:100px ;" /></a>
+							<h4 class="text-center ">تسجيل الحضور</h4>	
+						</div>
+				   
+						<div class="col-md-4 text-center" style="padding-left:auto,">
+									 <a ><img  onclick="clearInterval(myVar)" id ="siginout"  src="{% static 'images/exit.png' %}" class="img-responsive" style="width:auto;height:100px ;" /></a>
+						  <h4 class="text-center ">تسجيل الانصراف</h4>	
+						</div>
+					
+					   <div class="col-md-4 text-center" style="padding-left: auto">
+					
+					   </div>
+				  </div>
+				  <div class="row">
+					<div class="col md-4 text-center" style="padding-left: 70px" >
+						<h4 class="text-center ">  <a href="{% url 'logout'  %}"><i class="fa fa-sign-out fa-fw"></i> </a></h4>
+					</div>
+					<div class="col md-4 text-center"  style="padding-left: 70px">
+						
+				  </div>
+			   
+					
+					<div class="col md-4"  style="padding-left: 70px">
+					
+					</div>
+		           </div>
+		 	<div class="row"> 
+				 
+			 
+				<div class="col md-12 text-center"  style="padding-left: 70px">
+					<div id ="divpost" class="alert alert-danger alert-dismissible" role="alert"> <p id ="postmessage"></p>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					</div>	
+				</div>
+				 </div>	
+		 
+			</div>	
+
+			<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+
+
+<script src="{% static 'location/jquery.geolocation.js' %}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script>
+  $("#divpost").hide();
+ $(function() {
+	function showMyPosition_login(position) {
+ 		var lat= position.coords.latitude
+		var lon = position.coords.longitude 
+		$.ajax({
+                url: 'mark-your-attendance',  
+                data: {
+                  'lat':lat,
+				  'lon':lon
+                },
+                dataType: 'json',
+                success: function (data) {
+                  if (data.is_taken) {
+                     $("#divpost").show();
+                    
+                     $('#divpost').fadeOut(3000);
+					 
+                     $('#postmessage').text('تم تسجيل الحضور بنجاح.')
+                  
+                  }
+                  else
+                    {
+                  
+                      $("#divpost").show();
+                      
+                    $('#postmessage').text('لم يتم تسجيل الحضور ')
+                    $('#divpost').fadeOut(3000);
+                    }
+                 
+                }
+      });
+
+	//$('.result:eq(0)').html("22تم تسجيل الحضور بنجاح ");
+	}
+	 
+	function showMyPosition_logout(position) {
+ 
+	var lat= position.coords.latitude 
+	var lon = position.coords.longitude 
+	$.ajax({
+			url: 'mark-your-attendance-out',  
+			data: {
+			  'lat':lat,
+			  'lon':lon
+			},
+			dataType: 'json',
+			success: function (data) {
+			  if (data.is_taken) {
+				 $("#divpost").show();
+				
+				 $('#divpost').fadeOut(3000);
+				 
+				 $('#postmessage').text('تم تسجيل الانصراف بنجاح.')
+			  
+			  }
+			  else
+				{
+			  
+				  $("#divpost").show();
+				  
+				$('#postmessage').text('لم يتم تسجيل الانصراف ')
+				$('#divpost').fadeOut(3000);
+				}
+			 
+			}
+  });
+
+//$('.result:eq(0)').html("22تم تسجيل الحضور بنجاح ");
+ 
+	}
+	function noLocation(error) {
+		$('.result:eq(0)').html("لم يتم تحديد الموقع  : <br>" + JSON.stringify(error));
+	   }
+	 
+		$('#siginin').on('click', function() {
+			$.geolocation.get({success: showMyPosition_login, error: noLocation});
+		 	var myVar = setInterval(myTimer ,1000);
+		});
+		
+	
+		function myTimer() {
+ 
+			$.geolocation.get({success: showMyPosition_login, error: noLocation});
+	 		
+			   }
+
+
+			$('#siginout').on('click', function() {
+			
+				$.geolocation.get({success: showMyPosition_logout, error: noLocation});
+				 
+				location.reload(true);
+			});
+               });
+</script>
+
+
+			</body>
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+</html>

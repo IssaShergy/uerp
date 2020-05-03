@@ -1,0 +1,26 @@
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+  
+  </head>
+  <body>
+  <div id="navbar"><span>Red Stapler - Geolocation API</span></div>
+  <div id="wrapper">
+    <button id="location-button">Get User Location</button>
+    <div id="output"></div>
+  </div>
+  
+  <script>
+          $('#location-button').click(function(){
+        
+            if (navigator.geolocation) { //check if geolocation is available
+                navigator.geolocation.getCurrentPosition(function(position){
+                 alert(position);
+                });   
+            }
+               
+          });
+  </script>
+  </body>
+</html>

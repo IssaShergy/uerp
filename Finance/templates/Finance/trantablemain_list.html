@@ -1,0 +1,190 @@
+ {% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">القيود اليومية</h1>
+                     
+                        <button  id="post" class="btn btn-primary pt5" type="submit"> ترحيل القيود</button>
+
+                        <div id ="divpost" class="alert alert-danger alert-dismissible" role="alert"> <p id ="postmessage"></p>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      </div>
+
+                    </div>
+                    
+                        <div class="card card-body">
+                           
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a   class="btn btn-primary  fa fa-plus fa-1x" href="{% url 'profile-add' %}">   </a>
+                                        <form method="get">
+                                          {{myFilter.form.as_table}}
+                                  
+                                          <button id="serach" class="btn btn-primary" type="submit">بحث</button>
+                                        </form>
+                                    </div>
+                                    <!--  /.panel-heading -->
+                                    <div class="panel-body">
+                                        <table width="100%" class="table table-striped table-bordered table-hover"  id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>رقم القيد</th>
+                                                    <th>الرقم الدفتري</th>
+                                                    <th>التاريخ</th>
+                                                    <th>الوصف</th>
+                                                    <th>الحالة</th>
+                                                    <th>تعديل</th>
+                                                   
+                                                    <th>حذف</th>
+                                                    <th>   <input type="checkbox" id="checkAll"> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in form %}
+                                                <tr class="odd gradeX">
+                                                    <td>{{ i.TranNo}}</td>
+                                                    <td>{{i.notebookNum}}</td>
+                                                  
+                                                    <td>{{i.TranDate|date:"Y/m/d" }}</td>
+                                                    <td>{{i.description}}</td>
+                                                    <td> 
+                                                      {% if  i.Post  == 1 %}
+                                                      مرحل
+                                                      {% else %}
+                                                      
+                                                      غير مرحل      
+                                                      {% endif %}
+
+                                                    </td>
+                                                   
+                                                    <td> <a class="fa fa-edit fa-2x"  href="{% url 'profile-update' i.id %}"></a></td>
+                                                    <td><a class="fa fa-trash-o fa-2x"  href="{% url 'profile-delete' i.id %}"></a></td>
+                                                    <td>  
+                                                      {% if  i.Post  == 1 %}
+                                                      <p class="fa fa-check-square-o" ></p>
+                                                      {% else %}
+                                                      
+                                                      <input type="checkbox" name="chk"  id = "{{ i.id}}"  class="checkPost" >      
+                                                      {% endif %}
+
+                                                      
+                                                      
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                             
+                                            </tbody>
+                                        </table>
+                                        {% if form.has_other_pages %}
+                                        <ul class="pagination">
+                                          {% if form.has_previous %}
+                                            <li><a href="?page={{ form.previous_page_number }}">&laquo;</a></li>
+                                          {% else %}
+                                            <li class="disabled"><span>&laquo;</span></li>
+                                          {% endif %}
+                                          {% for i in form.paginator.page_range %}
+                                            {% if form.number == i %}
+                                              <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                            {% else %}
+                                              <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                            {% endif %}
+                                          {% endfor %}
+                                          {% if form.has_next %}
+                                            <li><a href="?page={{ form.next_page_number }}">&raquo;</a></li>
+                                          {% else %}
+                                            <li class="disabled"><span>&raquo;</span></li>
+                                          {% endif %}
+                                        </ul>
+                                      {% endif %}
+                            
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                            </div>
+                            
+                        </div>
+               
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+    </div>
+    <script type="text/javascript" src="{% static 'jquery-ui/external/jquery/jquery.js' %}"></script>  
+    
+    <script type="text/javascript" src="{% static 'jquery-ui/jquery-ui.min.js' %}"></script>
+
+    <script type="text/javascript">
+  
+        $(function() { 
+          $("#divpost").hide();
+            // post 
+            $("#post").click(function() {
+              
+            
+            $("input:checkbox[name=chk]:checked").each(function () {
+                var id= $(this).attr("id");
+            // alert("Id: " + $(this).attr("id") + " Value: " + $(this).val());
+            
+       
+            $.ajax({
+                url: '/ajax/validate_username/',
+                data: {
+                  'id': id
+                },
+                dataType: 'json',
+                success: function (data) {
+                  if (data.is_taken) {
+                     $("#divpost").show();
+                    
+                     $('#divpost').fadeOut(3000);
+                     
+                     $('#postmessage').text('تم ترحيل القيد بنجاح.')
+                    // alert(" ");
+                  }
+                  else
+                    {
+                      alert("");
+                      $("#divpost").show();
+                      
+                    $('#postmessage').text('لا يوجد قيد بالرقم المدخل')
+                    $('#divpost').fadeOut(3000);
+                    }
+                 
+                }
+      });
+
+
+        });
+        location.reload(true);
+    });
+
+        
+             
+          //post end 
+          $("#checkAll").attr("data-type", "check");
+              $("#checkAll").click(function() {
+              if ($("#checkAll").attr("data-type") === "check") {
+                  $(".checkPost").prop("checked", true);
+                  $("#checkAll").attr("data-type", "uncheck");
+                  
+              } else {
+                  $(".checkPost").prop("checked", false);
+                  $("#checkAll").attr("data-type", "check");
+                
+              }
+              })
+
+            $("input[name='TranNo']").on('input', function(e) { 
+                $(this).val($(this).val().replace(/[^0-9]/g, '')); 
+            }); 
+            
+        });        
+        $("#id_start_date").datepicker({ dateFormat: "yy-mm-dd" }).val()
+        $("#id_end_date").datepicker({ dateFormat: "yy-mm-dd" }).val()
+        
+    </script>
+
+{% endblock %}

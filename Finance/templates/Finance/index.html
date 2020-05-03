@@ -1,0 +1,512 @@
+ {% extends "admin_app/admin_chart.html" %} 
+{% load static %}
+{% block content %}
+<!-- {% load crispy_forms_tags %} -->
+    <title>Chart of Accounts</title>
+     
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'manageaccounts/css/zTreeStyle/zTreeStyle.css' %}">
+
+    <style type="text/css">
+        .ztree li span.button.add {
+            margin-left: 2px;
+            margin-right: -1px;
+            background-position: -144px 0;
+            vertical-align: top;
+            *vertical-align: middle
+        }
+    </style>
+ 
+ <style>
+    .modal {
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+        helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial,
+        sans-serif;
+    }
+
+    .modal__overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal__container {
+      background-color: #fff;
+      padding: 30px;
+      max-width: 500px;
+      max-height: 100vh;
+      border-radius: 4px;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    .modal__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal__title {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-weight: 600;
+      font-size: 1.25rem;
+      line-height: 1.25;
+      color: #00449e;
+      box-sizing: border-box;
+    }
+
+    .modal__close {
+      background: transparent;
+      border: 0;
+    }
+
+    .modal__header .modal__close:before {
+      content: "\2715";
+    }
+
+    .modal__content {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal__btn {
+      font-size: 0.875rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      background-color: #e6e6e6;
+      color: rgba(0, 0, 0, 0.8);
+      border-radius: 0.25rem;
+      border-style: none;
+      border-width: 0;
+      cursor: pointer;
+      -webkit-appearance: button;
+      text-transform: none;
+      overflow: visible;
+      line-height: 1.15;
+      margin: 0;
+      will-change: transform;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      transition: -webkit-transform 0.25s ease-out;
+      transition: transform 0.25s ease-out;
+      transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
+    }
+
+    .modal__btn:focus,
+    .modal__btn:hover {
+      -webkit-transform: scale(1.05);
+      transform: scale(1.05);
+    }
+
+    .modal__btn-primary {
+      background-color: #00449e;
+      color: #fff;
+    }
+
+    /**************************\
+Demo Animation Style
+\**************************/
+    @keyframes mmfadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes mmfadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes mmslideIn {
+      from {
+        transform: translateY(15%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes mmslideOut {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-10%);
+      }
+    }
+
+    .micromodal-slide {
+      display: none;
+    }
+
+    .micromodal-slide.is-open {
+      display: block;
+    }
+
+    .micromodal-slide[aria-hidden="false"] .modal__overlay {
+      animation: mmfadeIn 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .micromodal-slide[aria-hidden="false"] .modal__container {
+      animation: mmslideIn 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .micromodal-slide[aria-hidden="true"] .modal__overlay {
+      animation: mmfadeOut 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .micromodal-slide[aria-hidden="true"] .modal__container {
+      animation: mmslideOut 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .micromodal-slide .modal__container,
+    .micromodal-slide .modal__overlay {
+      will-change: transform;
+    }
+  </style>
+
+ <div class="row">
+       
+    <div class="col-lg-12">
+        <br>
+        <!-- <h1 class="page-header"> </h1> -->
+    </div>
+  
+</div>
+<!-- /.row -->
+<div class="row">
+  
+    <div  class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               إعداد الدليل المحاسبي
+            </div>
+            <div class="panel-body">
+                <div class="row">
+{% csrf_token %}
+<table style="width: 100%;">
+    <tr>
+        <td style="vertical-align: top;">
+            <ul id="tree" class="ztree" style="width:100%; overflow:auto;"></ul>
+        </td>
+        <td style="vertical-align: top; width: 250px;">
+            <form id="search-form" style="margin-bottom: 30px;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td colspan="2"><input  class="form-control" type="text" name="search" id="search" placeholder="البحث....."
+                                               ></td>
+                        <!-- <td><input type="submit" value="Search"></td> -->
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>
+</div>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div
+        class="modal__container"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-1-title"
+      >
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-1-title">
+            Add Account
+          </h2>
+          <button
+            class="modal__close"
+            aria-label="Close modal"
+            data-micromodal-close
+          ></button>
+        </header>
+            <form class="black-80" id="accountaddform" action="/"> 
+                <div class="modal__content" id="modal-2-content"> 
+                    <div class="measure"> 
+                        <label for="accountname" class="f6 b db mb2 js-name">Name</label>
+                         <input id="accountname" type="text" required><br>
+                         <label for="mainaccount" class="f6 b db mb2 mt3">
+                            <input id="mainaccount" type="checkbox">
+                             Main</label> 
+                       
+                        </div> 
+                    </div> 
+                    <footer class="modal__footer">
+                        <button type="submit" class="modal__btn modal__btn-primary">Save</button>
+                        <button
+                          class="modal__btn"
+                          data-micromodal-close
+                          aria-label="Close this dialog window"
+                        >
+                          Close
+                        </button>
+                      </footer>
+                    </form>
+
+      </div>
+    </div>
+  </div>
+
+
+{% for message in messages %}
+
+<p  class="panel-title" id="messages">{{message}}</p>
+{% endfor %}	
+<!-- /.row (nested) -->
+</div>
+<!-- /.panel-body -->
+</div>
+<!-- /.panel -->
+</div>
+ 
+<!-- /.col-lg-12 -->
+
+</div>
+
+<script type="text/javascript" src="{% static 'manageaccounts/js/jquery-1.4.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'manageaccounts/js/jquery.ztree.core.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'manageaccounts/js/jquery.ztree.exhide.js' %}"></script>
+<script type="text/javascript" src="{% static 'manageaccounts/js/fuzzysearch.js' %}"></script>
+<script type="text/javascript" src="{% static 'manageaccounts/js/jquery.ztree.excheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'manageaccounts/js/jquery.ztree.exedit.js' %}"></script>
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    
+        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        var zTree;
+        var selectedTreeNode;
+
+        var setting = {
+            view: {
+                dblClickExpand: false,
+                showLine: true,
+                selectedMulti: false,
+                showIcon: false,
+                addDiyDom: function (treeId, treeNode) {
+                    var sObj = $("#" + treeNode.tId + "_span");
+                    sObj.before("<span>" + treeNode.accountcode + " </span>");
+                },
+                addHoverDom: function (treeId, treeNode) {
+
+                    var sObj = $("#" + treeNode.tId + "_span");
+
+                    if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+                    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                        + "' title='add node' onfocus='this.blur();'></span>";
+                    sObj.after(addStr);
+
+                    var btn = $("#addBtn_" + treeNode.tId);
+                    if (btn) btn.bind("click", function () {
+                        MicroModal.show("modal-1");
+                        selectedTreeNode = treeNode;
+                        return false;
+                    });
+                },
+                removeHoverDom: function (treeId, treeNode) {
+                    $("#addBtn_" + treeNode.tId).unbind().remove();
+                }
+            },
+            async: {
+                enable: true,
+                url: "get",
+                type: "get"
+            },
+            callback: {
+                onAsyncError: function (event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+                    alert("خطأ اثناء استعادة البيانات من السيرفر.");
+                },
+                beforeRename: function (treeId, treeNode, newName, isCancel) {
+                    if(treeNode.name == newName)
+                        return true;
+                    account = new Account(treeNode.pId, newName, treeNode.accountcode);
+                    account.id = treeNode.id;
+                    apiService.update(account, function (data) {
+                        var zTree = $.fn.zTree.getZTreeObj(treeId);
+                        treeNode.name = newName;
+                        zTree.updateNode(treeNode);
+
+                    });
+                    return false;
+                },
+                beforeRemove: function (treeId, treeNode) {
+
+                    apiService.delete(treeNode.id, function (data) {
+
+                        var zTree = $.fn.zTree.getZTreeObj(treeId);
+                        zTree.removeNode(treeNode,false);
+
+                    });
+
+                    return false;
+                },
+                beforeDrop: function(treeId, treeNodes, targetNode, moveType) {
+                    treeNode = treeNodes[0];
+                    if(targetNode && treeNode.id === targetNode.id)
+                        return false;
+
+                    if(targetNode) {
+                        newSerial = targetNode.accountcode * 10 + 1;
+                        if (targetNode.children != undefined && targetNode.children.length != 0) {
+                            newSerial = targetNode.children[targetNode.children.length - 1].accountcode + 1;
+                        }
+                    }
+
+                    account = new Account(targetNode == null ? targetNode : targetNode.id, treeNode.name, newSerial);
+                    account.id = treeNode.id;
+                    apiService.update(account, function (data) {
+
+                        var zTree = $.fn.zTree.getZTreeObj(treeId);
+
+                        zTree.moveNode(targetNode,treeNode, moveType, false);
+
+                    });
+                    return false;
+                }
+            },
+            edit: {
+                enable: true,
+                editNameSelectAll: true,
+                showRemoveBtn: true,
+                showRenameBtn: true
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: ""
+                }
+            }
+        };
+
+        $(document).ready(function () {
+            var t = $("#tree");
+            t = $.fn.zTree.init(t, setting);
+            fuzzySearch('tree', '#search', false, true);
+        });
+
+
+        var apiService = {
+            errorMessage: "Operation failed.\nAn unexpected error occurred while connecting to server.",
+            create: function (account, success) {
+                data = account;
+                data.csrfmiddlewaretoken = csrfToken;
+                $.ajax({
+                    type: "POST",
+                    url: "create",
+                    data: data,
+                    success: success,
+                    error: function (error) {
+                        alert(apiService.errorMessage)
+                    }
+                });
+            },
+            update: function (account, success) {
+                data = account;
+                data.csrfmiddlewaretoken = csrfToken;
+                $.ajax({
+                    type: "POST",
+                    url: "update",
+                    data: data,
+                    success: success,
+                    error: function (error) {
+                        alert(apiService.errorMessage)
+                    }
+                });
+            },
+            delete: function (accountId, success) {
+                data = {};
+                data.id = accountId;
+                data.csrfmiddlewaretoken = csrfToken;
+                $.ajax({
+                    type: "POST",
+                    url: "delete",
+                    data: data,
+                    success: success,
+                    error: function (error) {
+                        alert(apiService.errorMessage)
+                    }
+                });
+            },
+        };
+
+        function Account(pId, name, accountcode,mainaccount=false) {
+            this.pId = pId;
+            this.name = name;
+            this.accountcode = accountcode;
+            this.mainaccount = (mainaccount ? 1 : 0);
+        }
+
+        MicroModal.init({
+          onShow: (modal) => console.info(`${modal.id} is shown`), // [1]
+          onClose: (modal) => console.info(`${modal.id} is hidden`), // [2]
+          openTrigger: "data-custom-open", // [3]
+          openClass: "is-open", // [5]
+          disableScroll: true, // [6]
+          disableFocus: false, // [7]
+          awaitOpenAnimation: false, // [8]
+          awaitCloseAnimation: false, // [9]
+          debugMode: true, // [10]
+        });
+
+        $("#accountaddform").submit(function(e){
+            e.preventDefault();
+                        
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+
+            var name = $("#accountname").val();
+            var mainaccount= $("#mainaccount").is(":checked");
+
+            if (!(name == null || name == "")) {
+                treeNode = selectedTreeNode;
+                if(mainaccount) {
+                    newSerial = treeNode.accountcode * 10 + 1;
+                } else {
+                    newSerial = treeNode.accountcode * 1000 + 1;
+                }
+                if(treeNode.children != undefined && treeNode.children.length != 0) {
+                    newSerial = treeNode.children[treeNode.children.length - 1].accountcode + 1;
+                }
+
+                account = new Account(treeNode.id, name, newSerial,mainaccount);
+                apiService.create(account, function (data) {
+                    account.id = data.id;
+                    zTree.addNodes(treeNode, account);
+                });
+            }
+
+            MicroModal.close("modal-1");
+        });
+    });
+ 
+</script>
+{% endblock %}
+
+
+ 
+
+ 

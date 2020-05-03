@@ -1,0 +1,75 @@
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+	.center
+	{
+		text-align: center;
+	}
+</style>
+
+<br>
+ 
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		   إضافة بيانات الشلركة
+		</div>
+		<div class="panel-body">
+
+	
+<div class="row">
+	
+	<div class="col-md-5">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.name|as_crispy_field }}     
+				{{ form.phone|as_crispy_field }}   
+				{{ form.mobile|as_crispy_field }}   
+				{{ form.taxNumber|as_crispy_field }}   
+				{{ form.company_pic|as_crispy_field }} 
+				
+			<input class="btn btn-primary"  value="حفظ التعديل" type="submit" name="Update Information">
+			</form>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card card-body center" >
+			<a class="btn btn-warning" href="{% url 'index' %}"> &#8592; لوحة التحكم</a>
+			<hr>
+			<h3 style="text-align: center">شعار الشركة</h3>
+			<hr>
+			<img   class="profile-pic" src="{{ company.company_pic.url }}" >
+			 
+		</div>
+	</div>
+</div>
+</div>
+</div>
+ 
+
+
+<script>
+
+
+	 
+document.onreadystatechange = () => {
+  if (document.readyState === 'complete') {
+	
+	 
+    document.getElementById('company_pic-clear_id').style.visibility = 'hidden';
+  }
+};
+	 
+ </script>
+
+{% endblock %}

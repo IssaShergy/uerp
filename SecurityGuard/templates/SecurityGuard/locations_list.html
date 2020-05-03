@@ -1,0 +1,104 @@
+ 
+{% load static %}
+
+<link href="{% static 'css/rtl/bootstrap.min.css' %}" rel="stylesheet">
+ 
+ 
+<link href="{% static 'css/rtl/bootstrap.rtl.css' %}" rel="stylesheet"> 
+
+<!-- MetisMenu CSS -->
+ <link href="{% static 'css/plugins/metisMenu/metisMenu.min.css' %}" rel="stylesheet">  
+
+<!-- Timeline CSS -->
+<link href="{% static 'css/plugins/timeline.css' %}" rel="stylesheet">  
+ <link rel="stylesheet" type="text/css" href="{% static 'jquery-ui/jquery-ui.min.css' %}">  
+<!-- Custom CSS -->
+<link href="{% static 'css/rtl/sb-admin-2.css' %}" rel="stylesheet"> 
+
+<!-- Morris Charts CSS -->
+<link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet"> 
+
+<!-- Custom Fonts -->
+<link href="{% static 'css/font-awesome/font-awesome.min.css' %}" rel="stylesheet" type="text/css"> 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+ <div class="row"></div>
+<!-- /.row -->
+<style>
+ 
+    a {
+       color: #fcf8e3;
+       text-decoration: none;
+   }
+   .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 2;
+    padding-right: 2px;
+}
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+    font-weight: bold;
+}
+.panel-green a {
+    color: #f5f5f5;
+}
+.panel-red a {
+    color: #fcf8e3;
+}
+   </style>
+
+{% for loc in locations %}
+
+
+    <div class="col-lg-2 col-md-2">
+        
+        {% if  loc.Present  == 1 %}
+        <div class="panel panel-green">
+        {% else %}
+
+        <div class="panel panel-red">    
+        {% endif %}
+
+      
+            <div class="panel-heading">
+                <div class="row">
+                   
+                    <div class="col-xs-8 text-right">
+                        <a  href="#">
+                        <div>{{loc.name}}</div>  
+                     </a>
+                    </div>
+                </div>
+            </div>
+          
+                 
+         
+        </div>
+    </div>
+
+{% empty %}
+<li> لاتوجد مواقع.</li>
+{% endfor %}
+</div>
+    <script src="{% static 'admin_app/data/morris-data.js' %}"></script>
+
+
+     <!-- Morris Charts CSS -->
+     <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
+     <!-- Morris Charts JavaScript -->
+     <script src="{% static 'js/raphael/raphael.min.js' %}"></script>
+     <script src="{% static 'js/morris/morris.min.js' %}"></script>
+ 
+
+ 
+<!-- {% for loc in object_list %}
+    <li>{{ loc.name }}</li>
+{% empty %}
+    <li> لاتوجد مواقع.</li>
+{% endfor %}
+</ul> -->

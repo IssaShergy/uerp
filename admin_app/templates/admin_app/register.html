@@ -1,0 +1,100 @@
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+#messages{
+  background-color: rgba(174, 245, 146, 0.493);
+  color: red;
+  padding: 10px;
+  margin-top: 10px;
+        border-radius: 20px;
+}
+
+</style>
+
+  
+
+ 
+   
+ 
+<div class="col-lg-12">
+  <h1 class="page-header"> تسجيل مستخدم جديد</h1>
+</div>
+<div class="container-fluid">
+  <div class="row">
+     
+      <div class="col-lg-6">
+          <div class="card card-body">
+             
+          	<form method="POST" action="">
+              {% csrf_token %}
+            <div class="form-row">
+              
+                {{ form.username|as_crispy_field }}
+                {{ form.first_name|as_crispy_field }}
+                {{ form.last_name|as_crispy_field }}
+           
+          
+                {{ form.email|as_crispy_field }}
+        
+      
+           
+         
+               {{ form.password1|as_crispy_field }}
+               {{ form.password2|as_crispy_field }}
+            </div>
+ <button type="submit" class="btn btn-primary">تسجيل</button> 
+ {% for message in messages %}
+                   
+ <p  class="panel-title" id="messages">{{message}}</p>
+ 
+
+           {% endfor %}	
+{{form.errors}}
+
+          	</form>	
+          </div>
+           
+
+      </div>
+
+
+  </div>
+  <!-- /.panel -->
+  </div>
+
+</div>
+
+ 
+<script>
+  /* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
+//We start indexing at one because CSRF_token is considered and input field 
+*/
+document.getElementById("hint_id_password1").innerHTML =''
+document.getElementById("hint_id_password2").innerHTML =''
+var s = document.getElementById('hint_id_password1');
+          //  s.value = "new value";
+ 
+//Query All input fields
+var form_fields = document.getElementsByTagName('input')
+ 
+
+form_fields[1].placeholder='اسم المستخدم..';
+form_fields[2].placeholder='الاسم الاول..';
+form_fields[3].placeholder='الاسم الثاني ..';
+form_fields[4].placeholder='البريد الاليكتروني..';
+form_fields[5].placeholder='كلمة المرور ...';
+form_fields[6].placeholder='اعادة ادخال كلمة المرور...';
+
+
+for (var field in form_fields){	
+form_fields[field].className += ' form-control'
+}
+</script>
+ 
+
+ 
+
+
+{% endblock %}

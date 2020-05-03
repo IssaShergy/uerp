@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>U ERP System</title>
+
+     
+    <!-- Bootstrap Core CSS -->
+   <link href="{% static 'css/rtl/bootstrap.min.css' %}" rel="stylesheet">
+     -->
+    <!-- not use this in ltr -->
+   <link href="{% static 'css/rtl/bootstrap.rtl.css' %}" rel="stylesheet"> 
+
+    <!-- MetisMenu CSS -->
+      <link href="{% static 'css/plugins/metisMenu/metisMenu.min.css' %}" rel="stylesheet">  
+
+    <!-- Timeline CSS -->
+    <link href="{% static 'css/plugins/timeline.css' %}" rel="stylesheet">  
+      <link rel="stylesheet" type="text/css" href="{% static 'jquery-ui/jquery-ui.min.css' %}">  
+    <!-- Custom CSS -->
+     <link href="{% static 'css/rtl/sb-admin-2.css' %}" rel="stylesheet"> 
+
+    <!-- Morris Charts CSS -->
+    <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet"> 
+
+    <!-- Custom Fonts -->
+     <link href="{% static 'css/font-awesome/font-awesome.min.css' %}" rel="stylesheet" type="text/css"> 
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+    .navfont
+    {
+        font-size: 18px;
+        font-weight: 200;
+    }
+    .usersetting
+    {
+      float: left;  
+    }
+    
+ 
+  .hello-msg{
+    font-size: 18px;
+    color: rgb(70, 72, 236);
+    margin-right: 20px;
+  }
+ 
+
+</style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+       
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""> <p  >ERP <img  width="30px" src="{% static 'images/logo1.png' %}" alt=""> </p> </a>
+                <a class="navbar-brand" href=""> <span  class="hello-msg"   > مرحباً , {{ request.user}} </span> </a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-left usersetting">
+                
+             
+                </li>
+                <!-- /.dropdown -->
+                 
+     
+                <li class="dropdown"    >
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> ملف المستخدم </a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> الاعدادات</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout'  %}"><i class="fa fa-sign-out fa-fw"></i>تسجيل الخروج</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar navfont" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        
+                        <li>
+                            <a class="active" href="{% url 'index' %}"><i class="fa fa-dashboard fa-fw"></i> لوحة التحكم</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gears fa-fw"></i>  إدارة النظام<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{% url 'register' %}"> اضافة مستخدم</a>
+                                </li>
+                                <li>
+                                    <a href=" "> الصلاحيات</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html"> الاعدادات الاساسية</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'CompanySettings' %}"> اضافة بيانات الشركة</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'branch_show' %}"> اضافة فرع  </a>
+                                </li>
+                                
+                            </ul>
+                            <!-- fa-bar-chart-o/.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa  fa-bar-chart fa-fw"></i> إدارة الحسابات  <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{% url 'chartofaccount' %}">  دليل الحسابات  </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'profile-list' %}">القيود اليومية</a>
+                                </li>
+                                <li>
+                                      <a href="{% url 'Currency' %}">العملات</a> 
+                                </li>
+                                <li>
+                                    <a href="typography.html">كشف حساب</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'costcenter' %}">مراكز التكلفة  </a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!--  ادارة المخاfa-paperclipزن-->
+                        <li>
+                            <a href="#"><i class="fa  fa-shopping-cart fa-fw"></i> إدارة المبيعات<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="panels-wells.html">فواتير المبيعات</a>
+                                </li>
+                                <li>
+                                    <a href="buttons.html">مرتجع المبيعات</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html">تقارير المبيعات</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html">فاتورة مبدئية</a>
+                                </li>
+                                 
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                                            
+                        <li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-copy fa-fw"></i> إدارة المشتريات  <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="panels-wells.html">فاتورة مشتريات</a>
+                                    </li>
+                                    <li>
+                                        <a href="buttons.html">مرتجع المشتريات</a>
+                                    </li>
+                                    <li>
+                                        <a href="notifications.html">تقارير المشتريات</a>
+                                    </li>
+                                     
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+
+
+             
+                                <li>
+                                    <a href="#"><i class="fa fa-paperclip fa-fw"></i> إدارة الاقساط  <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="panels-wells.html">  سداد الاقساط    </a>
+                                        </li>
+                                        <li>
+                                            <a href="buttons.html">كشف حساب عميل</a>
+                                        </li>
+                                        <li>
+                                            <a href="notifications.html">كشف حساب المندوب</a>
+                                        </li>
+                                        <li>
+                                            <a href="typography.html"> التقرير اليومي</a>
+                                        </li>
+                                       
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            {% block content %}
+            {% endblock %}
+   
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+   
+   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>  
+      {% block javascript %}
+    {% endblock %}
+
+    <!-- jQuery Version 1.11.0 -->
+    <!-- <script src="{% static 'js/jquery-1.11.0.js' %}"></script> -->
+  
+    <!-- Bootstrap Core JavaScript -->
+    
+     <script type="text/javascript"  src="{% static 'js/bootstrap.min.js' %}"></script> 
+
+    <!-- Metis Menu Plugin JavaScript -->
+      <script type="text/javascript"  src="{% static 'js/metisMenu/metisMenu.min.js' %}"></script> 
+
+    <!-- Morris Charts JavaScript -->
+     <script type="text/javascript"  src="{% static 'js/raphael/raphael.min.js' %}"></script>  
+     <script type="text/javascript"  src="{% static 'js/morris/morris.min.js' %}"></script> 
+
+    <!-- Custom Theme JavaScript -->
+   <script  type="text/javascript"  src="{% static 'js/sb-admin-2.js' %}"></script> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+ 
+
+</body>
+
+</html>

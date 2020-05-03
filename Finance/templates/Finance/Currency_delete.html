@@ -1,0 +1,24 @@
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+
+
+			<!-- <p>"؟ {{ccenter.name}}" هل تود بالفعل حذف </p> -->
+
+			<!-- <form action="{% url 'Currency_delete' ccenter.id  %}" method="POST">
+				
+				{% csrf_token %}
+				<a class="btn btn-warning" href="{% url 'Currency' %}">إلغاء</a>
+
+				<input class="btn btn-danger" value="تأكيد" type="submit" name="submit">
+			</form> -->
+		</div>
+	</div>
+</div>
+
+{% endblock %}

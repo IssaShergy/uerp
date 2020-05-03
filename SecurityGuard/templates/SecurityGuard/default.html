@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <link href="{% static 'css/rtl/bootstrap.min.css' %}" rel="stylesheet">
+ 
+
+ 
+
+ <link href="{% static 'css/plugins/metisMenu/metisMenu.min.css' %}" rel="stylesheet">  
+
+  
+
+  
+   <link rel="stylesheet" type="text/css" href="{% static 'jquery-ui/jquery-ui.min.css' %}">  
+  
+ 
+
+   
+<link href="{% static 'css/font-awesome/font-awesome.min.css' %}" rel="stylesheet" type="text/css"> 
+ 
+
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+
+    <title>Interactive maps for Django web apps</title>
+  </head>
+  <body>
+    <style>
+        .marker {
+        display: block;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+        }
+        
+
+        </style>
+   <div id='map' style='width: auto; height: 600px;'></div>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2hlcmd5IiwiYSI6ImNrOWxwOXBpYTAyMXQzbXBjZHRkYXIyajQifQ.2I5qN72LageukO4-Ikx8Dw';
+    // var map = new mapboxgl.Map({
+    // container: 'map',
+    // style: 'mapbox://styles/mapbox/satellite-streets-v10', // 'mapbox://styles/mapbox/streets-v10',
+     
+    //  center: [46.7902278,24.6385719],
+    //  zoom: 9,
+    //  bearing: 180
+    // });
+    var geojson = {
+'type': 'FeatureCollection',
+'features': [
+{
+'type': 'Feature',
+'properties': {
+'message': 'الفيصلية، الرياض 12894',
+'iconSize': [50, 50]
+},
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [46.7902278,24.6385719]
+        }
+},
+
+{
+'type': 'Feature',
+'properties': {
+'message': 'سمائل للعطور',
+'iconSize': [50, 50]
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [46.709213,24.6268858 ]
+}
+},
+
+{
+'type': 'Feature',
+'properties': {
+'message': 'المدرسة العالمية التركية',
+'iconSize': [20, 20]
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [46.7011878,24.631021]
+}
+}
+]
+};
+ 
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [46.7902278,24.6385719],
+zoom: 5
+});
+ 
+// add markers to map
+    geojson.features.forEach(function(marker) {
+    // create a DOM element for the marker
+    var el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage =
+    'url(http://127.0.0.1:8000/static/images/mapbox-icon.png)';
+    el.style.width = marker.properties.iconSize[1] + 'px';
+    el.style.height = marker.properties.iconSize[1] + 'px';
+    
+    el.addEventListener('click', function() {
+    window.alert(marker.properties.message);
+    });
+    
+    // add marker to map
+    new mapboxgl.Marker(el)
+    .setLngLat(marker.geometry.coordinates)
+    .addTo(map);
+    });
+
+</script>
+  </body>
+</html>

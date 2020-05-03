@@ -1,0 +1,51 @@
+{% extends "admin_app/front_end.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .b{
+ direction: rtl;
+}
+#messages{
+			background-color: rgba(174, 245, 146, 0.493);
+			color: red;
+			padding: 10px;
+			margin-top: 10px;
+            border-radius: 20px;
+		}
+
+</style>
+<div class="container ">
+        <div class="row b">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> تسجيل الدخول</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="POST"   action="">
+                            {% csrf_token %}
+                     
+                                <div class="form-group">
+                                    <input type="text" name="username" placeholder="اسم المستخدم..." class="form-control">
+		 
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="كلمة المرور" name="password" type="password" value="">
+                                </div>
+                            
+                                <!-- Change this to a button or input when using this as a form -->
+                                
+                                <input class="btn btn-lg btn-success btn-block" type="submit" value="دخول">
+                        </form>
+                    </div>
+ 
+                    {% for message in messages %}
+                   
+					<p  class="panel-title" id="messages">{{message}}</p>
+                    {% endfor %}			
+             
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
