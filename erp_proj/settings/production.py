@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
+ 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
  
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -29,7 +29,7 @@ DEBUG = False
  
 TEMPLATED_DOCS_LIBREOFFICE_PATH =  'C://Program Files/LibreOffice/program'
 PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
-ALLOWED_HOSTS = ['https://enigmatic-sea-38337.herokuapp.com/']
+ALLOWED_HOSTS = ['167.99.51.57']
 # https://enigmatic-sea-38337.herokuapp.com/ | https://git.heroku.com/enigmatic-sea-38337.git
 # Application definition
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
