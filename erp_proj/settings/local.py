@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # 'grappelli',
     'django_po',
     'templated_docs',
-   
+   'SecurityGuard',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -101,6 +101,7 @@ DATABASES = {
         'ATOMIC_REQUESTS': True,
     }
 }
+ 
 
 # DATABASES = {
 #     'default': {
