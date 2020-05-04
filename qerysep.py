@@ -1,4 +1,10 @@
+#  local
+#  git commit -a -m "Chang setting"
+#  git push origin master
+#  server_hostname()
+#  git pull origin master
 
+# git add erp_proj/settings/production.py erp_proj/settings/local.py   erp_proj/settings/base.py
 # exprt to xle file 
 # https://studygyaan.com/django/how-to-export-excel-file-with-django
 
