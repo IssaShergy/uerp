@@ -11,28 +11,28 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
- 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
  
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'i+homa9tttt*pwd&=zs3&ttmmviqmas^p2pei^3v4v3u2j==_d62+7ov'
-SECRET_KEY = os.environ.get('SECRET_KEY', 'i+homa9tttt*pwd&=zs3&ttmmviqmas^p2pei^3v4v3u2j==_d62+7ov')  
+SECRET_KEY = 'i+homa9tttt*pwd&=zs3&ttmmviqmas^p2pei^3v4v3u2j==_d62+7ov'
+ 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG =  False
 
  
 TEMPLATED_DOCS_LIBREOFFICE_PATH =  'C://Program Files/LibreOffice/program'
 PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
-ALLOWED_HOSTS = ['167.99.51.57']
-# https://enigmatic-sea-38337.herokuapp.com/ | https://git.heroku.com/enigmatic-sea-38337.git
+ALLOWED_HOSTS = ['167.99.51.57','127.0.0.1']
+ 
 # Application definition
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,14 +55,14 @@ INSTALLED_APPS = [
     'django_po',
     #'templated_docs',
     'SecurityGuard',
-   
+   # 'herokuapp',
    
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+     
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,25 +96,32 @@ WSGI_APPLICATION = 'erp_proj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        
-        'NAME':'UERPDB1',
-        'USER':'postgres',
-        'PASSWORD':'123456',
-        'PORT':'5432',
-        'ATOMIC_REQUESTS': True,
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            
+            'NAME':'UERPDB1',
+            'USER':'postgres',
+            'PASSWORD':'123456',
+            'PORT':'5432',
+            'ATOMIC_REQUESTS': True,
+        }
     }
-}
+else:
+        DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'uerpdb1',
+            'USER': 'issa',
+            'PASSWORD': '123456',
+            'HOST': 'localhost',
+            'PORT': '',
+            'ATOMIC_REQUESTS': True,
+        }
+    }
 
-# add this
-# import dj_database_url
-# db_from_env = dj_database_url.config()
-# DATABASES['default'].update(db_from_env)
-# DATABASES['default']['CONN_MAX_AGE'] = 500
-
+   
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -158,30 +165,17 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-# MEDIA_URL = '/images/'
- 
-# # STATICFILES_DIRS = [
-# #     os.path.join(BASE_DIR, 'static')
-# # ]
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, 'static'),
-# )
-
-# STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
-# # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
-
-
- 
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-
+MEDIA_URL = '/images/'
  
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+ 
+
+# import dj_database_url 
+# prod_db  =  dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)

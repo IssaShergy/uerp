@@ -13,21 +13,24 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
  
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i+homa9*pwd&=zs3&mmviqmas^p2pei^3v4v3u2j==_d62+7ov'
+SECRET_KEY = 'i+homa9tttt*pwd&=zs3&ttmmviqmas^p2pei^3v4v3u2j==_d62+7ov'
  
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  False
 
-ALLOWED_HOSTS = ['167.99.51.57']
+ 
 TEMPLATED_DOCS_LIBREOFFICE_PATH =  'C://Program Files/LibreOffice/program'
-
+PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
+ALLOWED_HOSTS = ['167.99.51.57','127.0.0.1']
+ 
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,13 +53,16 @@ INSTALLED_APPS = [
     # 'dal_legacy_static',
     # 'grappelli',
     'django_po',
-    'templated_docs',
-   'SecurityGuard',
+    #'templated_docs',
+    'SecurityGuard',
+   # 'herokuapp',
+   
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+     
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,19 +96,32 @@ WSGI_APPLICATION = 'erp_proj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'UERPDB1',
-        'USER':'postgres',
-        'PASSWORD':'123456',
-        'PORT':'5432',
-        'ATOMIC_REQUESTS': True,
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            
+            'NAME':'UERPDB1',
+            'USER':'postgres',
+            'PASSWORD':'123456',
+            'PORT':'5432',
+            'ATOMIC_REQUESTS': True,
+        }
     }
-}
- 
+else:
+        DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'uerpdb1',
+            'USER': 'issa',
+            'PASSWORD': '123456',
+            'HOST': 'localhost',
+            'PORT': '',
+            'ATOMIC_REQUESTS': True,
+        }
+    }
 
+   
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -149,8 +168,14 @@ USE_TZ = False
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
  
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+ 
+
+# import dj_database_url 
+# prod_db  =  dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)
