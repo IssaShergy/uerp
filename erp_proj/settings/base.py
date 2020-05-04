@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i+homa9tttt*pwd&=zs3&ttmmviqmas^p2pei^3v4v3u2j==_d62+7ov'
  
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  False
+DEBUG =   True
 
  
 TEMPLATED_DOCS_LIBREOFFICE_PATH =  'C://Program Files/LibreOffice/program'
@@ -96,20 +96,21 @@ WSGI_APPLICATION = 'erp_proj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
             
-            'NAME':'uerpdb1',
-            'USER':'postgres',
-            'PASSWORD':'123456',
-            'PORT':'5432',
-            'ATOMIC_REQUESTS': True,
-        }
-    }
-else:
-        DATABASES = {
+#             'NAME':'uerpdb1',
+#             'USER':'postgres',
+#             'PASSWORD':'123456',
+#             'PORT':'5432',
+#             'ATOMIC_REQUESTS': True,
+#         }
+#     }
+    
+# else:
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'uerpdb1',
