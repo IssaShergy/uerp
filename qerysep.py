@@ -4,7 +4,7 @@
 #  server_hostname()
 #  git pull origin master
 
-# git add erp_proj/settings/production.py erp_proj/settings/local.py   erp_proj/settings/base.py
+# git add erp_proj/settings/production.py erp_proj/settings/local.py   erp_proj/settings/base.py erp_proj/settings/__init__.py
 # exprt to xle file 
 # https://studygyaan.com/django/how-to-export-excel-file-with-django
 
